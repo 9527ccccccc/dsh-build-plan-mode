@@ -1,0 +1,13 @@
+# Build / Plan Mode for DeepSeek Harness
+
+> Cordis Host-and-Client plugin adding persistent Build and read-only Plan modes to every DeepSeek Harness (DSH) Web session. Pure user-layer composition — zero modification of DSH core, npm installation, or presets. MIT licensed.
+
+Requires exactly DSH `0.1.1-rc.2` (Web). Install with `dsh plugin --profile web add`, restart; ships a bundle patch inserting the plugin row and disabling native `ui-plan`. Uninstall is profile-level rollback.
+
+## Docs
+
+- [README](README.md): purpose, requirements, install, uninstall, development
+- [ACCEPTANCE](ACCEPTANCE.md): seam-gate and lifecycle acceptance evidence
+- [Security policy](SECURITY.md): private vulnerability reporting
+- [Behavior authority](docs/build-plan-mode-spec.md)
+- [Design authority](docs/build-plan-mode-design.md)

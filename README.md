@@ -58,6 +58,28 @@ Note for forks intending to publish under a different name: rename the package i
 
 Use the repository issue tracker for questions and bug reports; see [SECURITY.md](SECURITY.md) for private vulnerability reporting, [CONTRIBUTING.md](CONTRIBUTING.md) for how to propose changes, [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community standards, and [CHANGELOG.md](CHANGELOG.md) for release history.
 
+## FAQ
+
+**Is this an official DeepSeek product?**
+
+No. This is an independent community plugin. It is not affiliated with, endorsed by, or supported by DeepSeek.
+
+**Does it modify my DeepSeek Harness installation?**
+
+No. It mounts from your Web profile composition only — zero changes to DSH core, the npm installation, the Web shell, or shipped presets. Removing it restores stock behavior.
+
+**Which DSH versions are supported?**
+
+Exactly `0.1.1-rc.2` (Web) today. The seam gate is pinned to that release; newer releases require re-running the gate first.
+
+**How does Plan enforce read-only?**
+
+A host-side monotonic tool guard denies mutation-class tools before they run, using public rc.2 seams only. No private APIs are wrapped, and no host patches are shipped or required.
+
+**Is there a plan mode in stock DSH already?**
+
+Native Plan exists but is step-oriented and takes over the review flow. This plugin provides a persistent per-session Build/Plan workflow instead, coexisting via profile composition.
+
 ## License
 
 [MIT](LICENSE) — see [LICENSE](LICENSE).
