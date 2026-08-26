@@ -3,7 +3,7 @@
 A persistent Cordis Host-and-Client plugin for [DeepSeek Harness](https://deepseek-harness.github.io/deepseek-harness/) that adds a Build / Plan mode control to every session:
 
 - **Build** — ordinary DSH behavior. Tools, sandbox, and approvals are exactly stock.
-- **Plan** — Host-enforced read-only for the current turn. Useful observation stays available; file writes, shell/terminal/code execution, escalation, and unknown tools are denied before they run, and the agent answers with an ordinary `执行计划` handoff you can execute in Build.
+- **Plan** — Host-enforced read-only for the current turn. Useful observation stays available; file writes, shell/terminal/code execution, escalation, and unknown tools are denied before they run, and the agent finishes the turn with an ordinary written plan handoff that you review and execute in Build.
 - Mode is persisted per session (survives refresh, resume, fork, and restart) and frozen for the duration of a running turn. Click, <kbd>Tab</kbd>, and `/bplan build|plan` drive the same Host state.
 - Plan turns may spawn read-only background Research Children; everything else stays first-level and untouched.
 
@@ -46,7 +46,7 @@ Remove the package from the profile's dependencies and `dsh.profile.bundles` (or
 ```powershell
 npm install
 npm run build        # emits everything into lib/ (outputs defined by scripts/lib-roster.mjs)
-npm test             # focused plugin tests (host / client / research-child / migration / bundle)
+npm test             # focused plugin tests
 npm run deploy:user-profile   # dev helper: copy the build into ~/.dsh/profiles/web
 ```
 
