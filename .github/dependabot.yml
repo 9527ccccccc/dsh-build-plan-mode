@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+version: 2
+updates:
+  # The package declares zero npm dependencies on purpose; only workflow
+  # actions are tracked. Action refs are SHA-pinned, so bumps are reviewable.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

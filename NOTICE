@@ -1,0 +1,8 @@
+<!-- SPDX-License-Identifier: MIT -->
+
+Build / Plan Mode for DeepSeek Harness
+Copyright (c) 2026 9527ccccccc
+
+This repository contains an independent community plugin and does not include or redistribute DeepSeek Harness source code or packages. The plugin consumes public extension seams of an installed DSH release and ships no host patches.
+
+DeepSeek and DeepSeek Harness are names of their respective owners. Their mention describes compatibility and does not imply affiliation, endorsement, or support.

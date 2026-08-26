@@ -1,0 +1,16 @@
+# Bundle patch shipped with @local/dsh-build-plan-mode-v2.
+# Applied automatically when this package is registered in dsh.profile.bundles
+# (for example via `dsh plugin --profile web add ./packages/build-plan-mode`).
+#
+# What it does:
+# 1. Inserts the Build/Plan standard plugin row (entry resolved by package name
+#    from the profile dependency tree).
+# 2. Disables the native `ui-plan` client row so the shipped Plan control does
+#    not render twice. Rollback: remove this package from dsh.profile.bundles
+#    (or delete the two entries below from your profile patch) and the native
+#    Plan UI returns unchanged.
+- insert:
+    - id: build-plan-mode
+      name: '@local/dsh-build-plan-mode-v2'
+- id: ui-plan
+  disabled: true
