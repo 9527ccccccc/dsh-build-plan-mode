@@ -11,7 +11,7 @@ A persistent Cordis Host-and-Client plugin for [DeepSeek Harness](https://deepse
 
 ## Requirements
 
-- **DSH `0.1.1-rc.2` (Web).** This pin is exact: the plugin relies on seams verified against exactly this release (`ACCEPTANCE.md`); any DSH upgrade invalidates that record until the seam gate is re-verified.
+- **DSH `0.1.5-rc.2` (Web).** Verified against this release (`ACCEPTANCE.md`). The Host reads the session log through both host shapes, so `0.1.1-rc.2` keeps working; any newer release invalidates the record until the seam gate is re-verified.
 - An existing Web profile (for example the default `web` profile at `~/.dsh/profiles/web`).
 
 ## Install
@@ -70,7 +70,7 @@ No. It mounts from your Web profile composition only — zero changes to DSH cor
 
 **Which DSH versions are supported?**
 
-Exactly `0.1.1-rc.2` (Web) today. The seam gate is pinned to that release; newer releases require re-running the gate first.
+`0.1.5-rc.2` (Web) is the verified release; `0.1.1-rc.2` also works, because the Host reads the session log through both host shapes (`snapshotEvents()` or the older `events` array). A newer release requires re-running the seam gate first.
 
 **How does Plan enforce read-only?**
 

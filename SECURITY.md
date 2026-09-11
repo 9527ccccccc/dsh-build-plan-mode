@@ -16,6 +16,7 @@ Best-effort response: acknowledgment within a few days, fix coordinated privatel
 
 | Plugin | DSH | Support |
 | --- | --- | --- |
-| 0.1.x | 0.1.1-rc.2 | security fixes, best effort |
+| 0.1.1 | 0.1.5-rc.2 (also runs on 0.1.1-rc.2) | security fixes, best effort |
+| 0.1.0 | 0.1.1-rc.2 | previous release — please upgrade |
 
-Older DSH releases were never supported; newer releases require re-running the seam gate first (`ACCEPTANCE.md`).
+DSH releases older than `0.1.1-rc.2` were never supported; newer releases require re-running the seam gate first (`ACCEPTANCE.md`).

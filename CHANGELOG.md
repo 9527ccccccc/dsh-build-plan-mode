@@ -4,7 +4,13 @@
 
 All notable changes to this project will be documented here.
 
-## 0.1.0 - Unreleased
+## 0.1.1 - 2026-09-11
+
+- Support DSH `0.1.5-rc.2`: the Host folds the session log through `snapshotEvents()`, which replaced the `events` array removed in that release. Both shapes fold identically, so `0.1.1-rc.2` keeps working.
+- Composer control restyled onto native composer chrome — ghost pill, host icon grid, theme alias tokens — with one sliding tint that eases non-linearly between modes while its colour fades green → amber; `prefers-reduced-motion` disables the transition.
+- Focused suite extended to both live Session shapes: `116/116`.
+
+## 0.1.0 - 2026-08-26
 
 - Initial public-source preparation of the rc2 Workflow Core.
 - Persistent per-Session Build and Plan modes; Current Turn Mode frozen at `turn/start`.

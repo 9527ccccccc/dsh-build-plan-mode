@@ -1,6 +1,6 @@
 # Build / Plan Acceptance
 
-Current acceptance status of the rc2 Workflow Core, against DSH **`0.1.1-rc.2`** (Web). Pre-rc2-adaptation evidence is archived in the project working records and is deliberately not repeated here.
+Current acceptance status of the rc2 Workflow Core, against DSH **`0.1.5-rc.2`** (Web). The earlier `0.1.1-rc.2` record is archived in the project working records and is deliberately not repeated here.
 
 ## Method
 
@@ -12,7 +12,7 @@ Three evidence layers, in increasing fidelity:
 
 ## 1. Focused suite
 
-`113/113 passing`. Coverage includes: mode-state replay over synthetic event logs (v2/v3 snapshots and all legacy lanes through the public fold interface), Plan policy fail-closed matrix, monotonic guard semantics, Research Child classification/ownership/interruption, wire-contract uniqueness, generated-bundle artifact pins (standalone form, no model-selection references), byte-freshness of every verbatim lib copy, deploy identity mapping, and archive-independent toolchain behavior.
+`116/116 passing`. Coverage includes: mode-state replay over synthetic event logs (v2/v3 snapshots and all legacy lanes through the public fold interface), both live Session shapes (`snapshotEvents()` and the older `events` array), Plan policy fail-closed matrix, monotonic guard semantics, Research Child classification/ownership/interruption, wire-contract uniqueness, generated-bundle artifact pins (standalone form, no model-selection references), byte-freshness of every verbatim lib copy, deploy identity mapping, and archive-independent toolchain behavior.
 
 ## 2. Seam gate — 8/8 verified
 
@@ -22,6 +22,7 @@ Three evidence layers, in increasing fidelity:
 | `registerContinuableSetup` — synchronous setup before child's first activity, disposer-owned | ✅ |
 | Native `command/run`+`command/done` records usable for plugin state (`bplan-state` is an open command name; no private event types written) | ✅ |
 | `sessionProjections.register` with `stateSchema`/`wire`, `stateOf` fold | ✅ |
+| `session.snapshotEvents()` — the current session-log read (`events` was removed in 0.1.5); the Host folds both shapes | ✅ |
 | `turn/start` ordering before prompt assembly | ✅ |
 | Stock rc.2 exposes no model-selection contracts — Core correctly independent of them | ✅ |
 | Profile patch layer may legally disable native `plan-mode`/`ui-plan` rows; rollback restores them | ✅ |
@@ -37,6 +38,6 @@ Three evidence layers, in increasing fidelity:
 
 ## Known limitations
 
-- Pinned to DSH `0.1.1-rc.2`; any DSH upgrade invalidates the seam-gate record until re-verified.
+- Verified against DSH `0.1.5-rc.2`; the older `0.1.1-rc.2` session shape stays readable, and any other DSH upgrade invalidates the seam-gate record until re-verified.
 - Exact model input/output/cache token counts are not exposed by the runtime and are reported as `N/A`.
 - The optional Mode Model Memory Extension ships off and requires official DSH contracts that do not exist on this release.

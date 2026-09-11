@@ -4,7 +4,7 @@ Product authority: `build-plan-mode-spec.md` (same docs directory).
 
 Status: complete design for review. This document does not authorize implementation, profile composition changes, deployment, or restart.
 
-Target runtime: DSH `0.1.1-rc.2` for the Core. The historical rc7 contract patches are evidence for a future Mode Model Memory Extension, not a prerequisite for the Core.
+Target runtime: DSH `0.1.5-rc.2` for the Core; the older `0.1.1-rc.2` session shape stays readable. The historical rc7 contract patches are evidence for a future Mode Model Memory Extension, not a prerequisite for the Core.
 
 ## 1. Design Result
 

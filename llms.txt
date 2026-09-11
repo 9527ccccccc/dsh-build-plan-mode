@@ -2,7 +2,7 @@
 
 > Cordis Host-and-Client plugin adding persistent Build and read-only Plan modes to every DeepSeek Harness (DSH) Web session. Pure user-layer composition — zero modification of DSH core, npm installation, or presets. MIT licensed.
 
-Requires exactly DSH `0.1.1-rc.2` (Web). Install with `dsh plugin --profile web add`, restart; ships a bundle patch inserting the plugin row and disabling native `ui-plan`. Uninstall is profile-level rollback.
+Requires DSH `0.1.5-rc.2` (Web) — verified on that release, and still compatible with the older `0.1.1-rc.2` session shape. Install with `dsh plugin --profile web add`, restart; ships a bundle patch inserting the plugin row and disabling native `ui-plan`. Uninstall is profile-level rollback.
 
 ## Docs
 

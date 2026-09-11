@@ -68,6 +68,15 @@ test('control renders exactly two buttons and quiet status renders nothing when 
     buttons[0].children.find((child) => child?.props?.['aria-hidden'] === true)?.children[0],
     buttons[1].children.find((child) => child?.props?.['aria-hidden'] === true)?.children[0],
   )
+  // The sliding tint is its own surface keyed by the projected next mode —
+  // never a per-button background that would snap between two fixed sides.
+  const thumb = elements.find((element) => element.props?.className === 'bplan-mode-thumb')
+  assert.equal(thumb.props['data-active'], 'build')
+  assert.equal(thumb.props['aria-hidden'], true)
+  elements.length = 0
+  Component({ sessionId: 's1', useProjection() { return { next: 'plan', current: null } }, selectMode() {} })
+  const planThumb = elements.find((element) => element.props?.className === 'bplan-mode-thumb')
+  assert.equal(planThumb.props['data-active'], 'plan')
   // The wrap carries the discoverable Tab-switch tooltip.
   const wrap = elements.find((element) => element.props?.className === 'bplan-mode-wrap')
   assert.match(wrap.props.title, /Tab/)
@@ -602,16 +611,27 @@ test('styles use alias tokens for both themes, a mobile rule, focus-visible, and
   assert.match(css, /var\(--dsw-alias-state-success-primary\)/)
   assert.match(css, /var\(--dsw-alias-state-warn-primary\)/)
   assert.match(css, /var\(--dsw-alias-state-error-primary\)/)
-  assert.match(css, /var\(--dsw-alias-brand-primary\)/)
+  assert.match(css, /var\(--dsw-alias-state-success-tertiary\)/)
+  assert.match(css, /var\(--dsw-alias-state-warn-tertiary\)/)
+  assert.match(css, /var\(--dsw-alias-border-l3\)/)
   // Non-color semantics: pressed style keyed on aria-pressed, not color alone.
   assert.match(css, /\[aria-pressed='true'\]/)
   // Keyboard-visible focus.
   assert.match(css, /:focus-visible/)
   // Mobile rule at exactly ≤520px, shrinking the control.
   assert.match(css, /@media \(max-width: 520px\)/)
-  // Desktop/mobile layout cannot overlap: the control is an inline grid in the
-  // tool row; the status is a separate flex row in the dock under the card.
+  // The sliding tint: one surface translating between two IDENTICAL halves
+  // (equal fixed columns), eased non-linearly, with the mode colour fading in
+  // step. Animation stays on compositor-friendly transform plus a small local
+  // background/colour change, and honours reduced motion.
+  assert.match(css, /\.bplan-mode-thumb\s*\{[^}]*transition:\s*transform[^;]*cubic-bezier/)
+  assert.match(css, /\.bplan-mode-thumb\[data-active='plan'\]\s*\{[^}]*translateX\(100%\)/)
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/)
+  // Desktop/mobile layout cannot overlap: the control is an inline grid whose
+  // two equal columns are exactly the thumb's 50% travel; the status is a
+  // separate flex row in the dock.
   assert.match(css, /\.bplan-mode-control\s*\{[^}]*display:\s*inline-grid/)
+  assert.match(css, /\.bplan-mode-control\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*\d+px\)/)
   assert.match(css, /\.bplan-mode-status\s*\{[^}]*display:\s*flex/)
   // No stale status: the status cell only exists while a turn runs and modes
   // differ (the component renders null otherwise) — the stylesheet must not

@@ -57,11 +57,31 @@ function modeLabel(mode) {
   return mode === 'build' ? 'Build' : 'Plan'
 }
 
+// Outline glyphs drawn on a 14px grid with the host's 1.5px stroke, but each
+// cropped to its own ink box (stroke allowance included). A padded 14x14
+// viewBox made the flex row measure phantom padding, so the icon's empty left
+// margin read as extra space before the glyph while the label sat tight
+// against the right edge.
+const MODE_ICONS = Object.freeze({
+  build: { d: 'M3 7.5 5.75 10.25 11 4.5', viewBox: '2.25 3.75 9.5 7.25', width: 9.5, height: 7.25 },
+  plan: { d: 'M3.5 4.5h7.5M3.5 7h7.5M3.5 9.5h5', viewBox: '2.75 3.75 9 6.5', width: 9, height: 6.5 },
+})
+
 function modeIcon(React, mode) {
-  return React.createElement('span', {
+  const icon = MODE_ICONS[mode]
+  return React.createElement('svg', {
     className: `bplan-mode-icon bplan-mode-icon-${mode}`,
+    viewBox: icon.viewBox,
+    width: icon.width,
+    height: icon.height,
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.5,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    focusable: false,
     'aria-hidden': true,
-  }, mode === 'build' ? '\u2713' : '\u2630')
+  }, React.createElement('path', { d: icon.d }))
 }
 
 export function createModeControl(React, runtime = {}) {
@@ -107,7 +127,16 @@ export function createModeControl(React, runtime = {}) {
         className: 'bplan-mode-control',
         role: 'group',
         'aria-label': 'Next message mode',
-      }, ...MODES.map((mode) => React.createElement('button', {
+      },
+      // The sliding tint lives in its own element so a mode change animates one
+      // surface across the control (transform + background-color) instead of
+      // snapping each button's own background between two fixed sides.
+      React.createElement('span', {
+        className: 'bplan-mode-thumb',
+        'data-active': view.available ? view.next : 'none',
+        'aria-hidden': true,
+      }),
+      ...MODES.map((mode) => React.createElement('button', {
         key: mode,
         type: 'button',
         className: `bplan-mode-button bplan-mode-${mode}`,
@@ -258,17 +287,22 @@ export function apply(ctx, runtime = {}) {
     if (styles !== undefined && typeof styles.insert === 'function') {
       install(() => styles.insert(`
 .bplan-mode-wrap { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
-.bplan-mode-control { display: inline-grid; grid-template-columns: repeat(2, minmax(58px, 1fr)); align-items: center; padding: 2px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 6px; background: var(--dsw-alias-bg-layer-1); }
-.bplan-mode-button { min-width: 58px; height: 28px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; border: 0; border-radius: 4px; padding: 0 8px; color: var(--dsw-alias-label-secondary); background: transparent; cursor: pointer; font: inherit; font-size: 12px; line-height: 1; letter-spacing: 0; white-space: nowrap; }
-.bplan-mode-button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
-.bplan-mode-button:disabled { cursor: default; opacity: .6; }
-.bplan-mode-build[aria-pressed='true'] { color: var(--dsw-alias-state-success-primary); background: var(--dsw-alias-bg-layer-2); font-weight: 600; }
-.bplan-mode-plan[aria-pressed='true'] { color: var(--dsw-alias-state-warn-primary); background: var(--dsw-alias-bg-layer-2); font-weight: 600; }
-.bplan-mode-icon { width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.bplan-mode-control { position: relative; display: inline-grid; grid-template-columns: repeat(2, 72px); align-items: stretch; padding: 0; border: 0; background: transparent; }
+.bplan-mode-thumb { position: absolute; top: 0; bottom: 0; left: 0; width: 50%; border-radius: 999px; background: transparent; transition: transform 180ms cubic-bezier(.22, 1, .36, 1), background-color 180ms cubic-bezier(.22, 1, .36, 1); }
+.bplan-mode-thumb[data-active='build'] { background: var(--dsw-alias-state-success-tertiary); }
+.bplan-mode-thumb[data-active='plan'] { transform: translateX(100%); background: var(--dsw-alias-state-warn-tertiary); }
+.bplan-mode-button { position: relative; z-index: 1; height: 28px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 0; border-radius: 999px; padding: 0 12px; color: var(--dsw-alias-label-secondary); background: transparent; cursor: pointer; font: inherit; font-size: 13px; font-weight: 500; line-height: 20px; letter-spacing: 0; white-space: nowrap; transition: color 180ms cubic-bezier(.22, 1, .36, 1); }
+.bplan-mode-button:hover:not(:disabled):not([aria-pressed='true']) { background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); }
+.bplan-mode-button:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--dsw-alias-border-l3); }
+.bplan-mode-button:disabled { cursor: default; color: var(--dsw-alias-label-dimmed); }
+.bplan-mode-build[aria-pressed='true'] { color: var(--dsw-alias-state-success-primary); font-weight: 600; }
+.bplan-mode-plan[aria-pressed='true'] { color: var(--dsw-alias-state-warn-primary); font-weight: 600; }
+.bplan-mode-icon { flex: none; display: block; }
 .bplan-mode-error { max-width: 110px; overflow: hidden; color: var(--dsw-alias-state-error-primary); font-size: 11px; line-height: 16px; text-overflow: ellipsis; white-space: nowrap; }
 .bplan-mode-status { display: flex; align-items: center; justify-content: flex-end; gap: 6px; min-height: 0; color: var(--dsw-alias-label-secondary); font-size: 11px; line-height: 16px; }
 .bplan-mode-status strong { color: var(--dsw-alias-label-primary); font-weight: 600; }
-@media (max-width: 520px) { .bplan-mode-control { grid-template-columns: repeat(2, minmax(52px, 1fr)); } .bplan-mode-button { min-width: 52px; padding-inline: 6px; } }
+@media (max-width: 520px) { .bplan-mode-control { grid-template-columns: repeat(2, 64px); } .bplan-mode-button { padding-inline: 6px; } }
+@media (prefers-reduced-motion: reduce) { .bplan-mode-thumb, .bplan-mode-button { transition: none; } }
       `))
     }
   } catch (error) {

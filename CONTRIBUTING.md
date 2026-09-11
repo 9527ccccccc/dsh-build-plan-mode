@@ -4,7 +4,7 @@ Thanks for looking in. This is a small, single-maintainer plugin — the bar is:
 
 ## Development setup
 
-Prerequisites: Node 18+ and a DSH `0.1.1-rc.2` Web install for live testing (unit tests alone need nothing else — the package has zero npm dependencies).
+Prerequisites: Node 18+ and a DSH `0.1.5-rc.2` Web install for live testing (unit tests alone need nothing else — the package has zero npm dependencies).
 
 ```powershell
 npm run build   # assemble lib/ from src/ (required before testing; the freshness pin enforces it)

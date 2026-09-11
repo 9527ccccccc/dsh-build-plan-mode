@@ -4,7 +4,7 @@
 
 This document is the product-behavior authority for the Build / Plan standard plugin.
 
-The accepted delivery target is DSH `0.1.1-rc.2`. The product has two explicit capability profiles:
+The accepted delivery target is DSH `0.1.5-rc.2`. The product has two explicit capability profiles:
 
 - **rc2 Core** is the first release contract. It provides the Build/Plan workflow and conservative Plan read-only protection without changing DSH model selection.
 - **Mode Model Memory Extension** is a later optional capability. It may activate only on a verified DSH release that exposes both official model-selection contracts required by the Host and Client.
@@ -15,7 +15,7 @@ The Core is useful and complete without the Extension. Absence of the Extension 
 
 DSH does not currently provide the required OpenCode-style Build/Plan workflow. A user cannot reliably choose, before sending a message, whether the next turn may mutate state or must remain observational. Native Plan state is step-oriented, its review flow can take over the composer, and it does not make delegated research read-only for the child's lifetime.
 
-The immediate requirement is therefore a persistent, Session-scoped mode workflow with Host-enforced Plan restrictions. The longer-term product also wants an independent complete model selection for Build and Plan, but DSH `0.1.1-rc.2` has no public plugin seam that can safely own Session model selection or invalidate the existing Client model directory.
+The immediate requirement is therefore a persistent, Session-scoped mode workflow with Host-enforced Plan restrictions. The longer-term product also wants an independent complete model selection for Build and Plan, but current DSH releases expose no public plugin seam that can safely own Session model selection or invalidate the existing Client model directory.
 
 The plugin must not simulate that missing authority, wrap private `apiProxy.sessions.*` methods, replace shared Service methods, duplicate the model selector, or modify DSH core or its npm installation.
 
